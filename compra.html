@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compra piezas Noir Supply: confirma prenda, datos de entrega y metodo de pago.">
+  <title>Comprar - Noir Supply</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles_updated.css?v=checkout-v11">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  <meta property="og:image" content="https://noirarchive.netlify.app/img/icon.png">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <a href="/index.html" aria-label="Logo Noir Supply">
+        <img src="img/icon.png?v=noir-tribal-matte" alt="Logo de Noir Supply" class="logo">
+      </a>
+      <div class="title-container">
+        <a href="/index.html">
+          <span class="brand-name">Noir Supply</span>
+          <p>Archivo Y2K / Second Hand</p>
+        </a>
+      </div>
+      <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="hamburger">☰</button>
+    </div>
+    <nav id="nav-menu" aria-label="Menu principal">
+      <ul>
+        <li><a href="/index.html">Inicio</a></li>
+        <li><a href="/drop.html">Drop</a></li>
+        <li><a href="/galeria.html">Catalogo</a></li>
+        <li><a href="/compra.html">Comprar</a></li>
+        <li><a href="/feedback.html">Clientes</a></li>
+        <li><a href="https://instagram.com/noirsupply0" target="_blank" rel="noopener noreferrer">IG</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section checkout-page fade-in">
+      <div class="checkout-heading">
+        <p class="section-kicker">Checkout Noir</p>
+        <h1>Compra directa</h1>
+        <p>Completa tu pedido con datos de entrega y metodo de pago. En esta version estatica se genera el correo del pedido y el respaldo por DM.</p>
+      </div>
+
+      <div class="checkout-layout" id="checkout-page">
+        <aside class="checkout-summary fade-in" aria-label="Resumen de pedido">
+          <img id="checkout-product-image" src="/img/icon.png" alt="Prenda seleccionada">
+          <div>
+            <p class="checkout-label">Prenda</p>
+            <h2 id="checkout-product-name">Selecciona una prenda</h2>
+            <p id="checkout-product-meta">Talla y estado</p>
+            <strong id="checkout-product-price">Precio por confirmar</strong>
+          </div>
+        </aside>
+
+        <form class="checkout-form fade-in" id="checkout-form">
+          <label>
+            Prenda
+            <select id="checkout-product-select" name="product" required></select>
+          </label>
+
+          <div class="checkout-grid">
+            <label>
+              Nombre completo
+              <input type="text" name="name" autocomplete="name" required>
+            </label>
+            <label>
+              Instagram
+              <input type="text" name="instagram" placeholder="@usuario" required>
+            </label>
+          </div>
+
+          <div class="checkout-grid">
+            <label>
+              Gmail o correo
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label>
+              Celular
+              <input type="tel" name="phone" autocomplete="tel" required>
+            </label>
+          </div>
+
+          <div class="checkout-grid">
+            <label>
+              Ciudad
+              <input type="text" name="city" autocomplete="address-level2" required>
+            </label>
+            <label>
+              Distrito
+              <input type="text" name="district" autocomplete="address-level3" required>
+            </label>
+          </div>
+
+          <label>
+            Direccion o agencia
+            <input type="text" name="address" autocomplete="street-address" required>
+          </label>
+
+          <div class="checkout-grid">
+            <label>
+              Entrega
+              <select name="delivery" required>
+                <option value="Shalom">Shalom</option>
+                <option value="Olva Courier">Olva Courier</option>
+                <option value="Motorizado Lima">Motorizado Lima</option>
+                <option value="Coordinar por DM">Coordinar por DM</option>
+              </select>
+            </label>
+            <label>
+              Metodo de pago
+              <select name="payment" required>
+                <option value="Yape">Yape</option>
+                <option value="Plin">Plin</option>
+                <option value="Transferencia BCP">Transferencia BCP</option>
+                <option value="PayPal">PayPal</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Nota del pedido
+            <textarea name="notes" rows="4" placeholder="Ej: quiero separar hoy, envio a provincia, consulta de medidas..."></textarea>
+          </label>
+
+          <div class="checkout-actions">
+            <button class="btn-ver-mas" type="submit" id="checkout-submit">Generar pedido</button>
+            <a class="btn-secondary" href="https://ig.me/m/noirsupply0" target="_blank" rel="noopener noreferrer">Enviar DM</a>
+          </div>
+          <p class="checkout-status" id="checkout-status" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Noir Supply. Archivo Y2K second hand. |
+      <a href="https://instagram.com/noirsupply0" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </p>
+  </footer>
+  <script src="script.js?v=checkout-v11"></script>
+</body>
+</html>

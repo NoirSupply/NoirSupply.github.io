@@ -2,6 +2,7 @@
 // Datos de productos, menu movil, render del catalogo y detalle de producto.
 
 const INSTAGRAM_DM_URL = 'https://ig.me/m/noirsupply0';
+const ORDER_EMAIL = 'noirsupply0@gmail.com';
 
 const products = [
   {
@@ -269,11 +270,11 @@ const productUpdates = {
     name: 'Recyclaje baggy jean',
     brand: 'Recycled',
     price: 'Consultar por DM',
-    status: 'Disponible',
+    status: 'Vendido',
     size: '34',
     condition: '9/10',
     measures: 'Largo, ancho, cintura y basta por DM',
-    description: 'Recyclaje jean fit baggy en negro, bolsillos con etiqueta y contraste de costuras.'
+    description: 'Recyclaje jean fit baggy en negro, bolsillos con etiqueta y contraste de costuras. Pieza vendida del drop.'
   },
   7: {
     name: 'True Religion fit recto',
@@ -299,11 +300,11 @@ const productUpdates = {
     name: 'Raw Blue jort baggy',
     brand: 'Raw Blue',
     price: 'Consultar por DM',
-    status: 'Disponible',
+    status: 'Vendido',
     size: '38',
     condition: '10/10',
     measures: 'Largo, ancho, cintura y basta por DM',
-    description: 'Raw Blue jort baggy con aplicaciones graficas y largo tipo oversized.'
+    description: 'Raw Blue jort baggy con aplicaciones graficas y largo tipo oversized. Pieza vendida del drop.'
   },
   10: {
     name: 'Zip gothic type MMA Elite',
@@ -367,12 +368,12 @@ const extraProducts = [
     name: 'Raw Blue fleur baggy',
     brand: 'Raw Blue',
     price: 'Oferta / ultima 380',
-    status: 'Disponible',
+    status: 'Vendido',
     size: '40',
     condition: '8.5/10',
     measures: 'Largo, ancho, cintura y basta por DM',
     image: '/img/instagram/product-04-b.jpg',
-    description: 'Raw Blue fit baggy con parches flor de lis y detalles rojos en denim gris.'
+    description: 'Raw Blue fit baggy con parches flor de lis y detalles rojos en denim gris. Pieza vendida del drop.'
   },
   {
     id: 20,
@@ -564,7 +565,7 @@ const renderProductCard = (product) => `
       <strong>${escapeHtml(product.price)}</strong>
       <div class="catalogo-actions">
         <a href="/producto.html?id=${product.id}">Ver prenda</a>
-        <a href="${INSTAGRAM_DM_URL}" target="_blank" rel="noopener noreferrer">DM</a>
+        <a href="${product.isSold ? INSTAGRAM_DM_URL : `/compra.html?id=${product.id}`}" ${product.isSold ? 'target="_blank" rel="noopener noreferrer"' : ''}>${product.isSold ? 'Similares' : 'Comprar'}</a>
       </div>
     </div>
   </div>
@@ -620,7 +621,101 @@ const renderProductDetail = () => {
   productImage.src = product.image;
   productImage.alt = `${product.name} - Precio: ${product.price}`;
 
-  document.getElementById('product-contact').href = INSTAGRAM_DM_URL;
+  const productContact = document.getElementById('product-contact');
+  productContact.href = product.isSold ? INSTAGRAM_DM_URL : `/compra.html?id=${product.id}`;
+  productContact.target = product.isSold ? '_blank' : '';
+  productContact.rel = product.isSold ? 'noopener noreferrer' : '';
+  productContact.textContent = product.isSold ? 'Pedir similares por Instagram' : 'Comprar ahora';
+};
+
+const getCheckoutMessage = (product, formData) => [
+  'Nuevo pedido Noir Supply',
+  '',
+  `Prenda: ${product.name}`,
+  `Marca: ${product.brand}`,
+  `Precio: ${product.price}`,
+  `Talla: ${product.size}`,
+  `Estado: ${product.status}`,
+  '',
+  `Nombre: ${formData.get('name')}`,
+  `Instagram: ${formData.get('instagram')}`,
+  `Correo: ${formData.get('email')}`,
+  `Celular: ${formData.get('phone')}`,
+  `Ciudad: ${formData.get('city')}`,
+  `Distrito: ${formData.get('district')}`,
+  `Direccion/agencia: ${formData.get('address')}`,
+  `Entrega: ${formData.get('delivery')}`,
+  `Pago: ${formData.get('payment')}`,
+  '',
+  `Nota: ${formData.get('notes') || 'Sin nota'}`
+].join('\n');
+
+const renderCheckoutProduct = (product) => {
+  document.getElementById('checkout-product-image').src = product.image;
+  document.getElementById('checkout-product-image').alt = `${product.name} - ${product.status}`;
+  document.getElementById('checkout-product-name').textContent = product.name;
+  document.getElementById('checkout-product-meta').textContent = `${product.brand} / Talla ${product.size} / ${product.status}`;
+  document.getElementById('checkout-product-price').textContent = product.price;
+
+  const submitButton = document.getElementById('checkout-submit');
+  const status = document.getElementById('checkout-status');
+
+  if (product.isSold) {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Prenda vendida';
+    status.hidden = false;
+    status.textContent = 'Esta pieza ya fue vendida. Puedes pedir similares por DM.';
+  } else {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Generar pedido';
+    status.hidden = true;
+    status.textContent = '';
+  }
+};
+
+const setupCheckout = () => {
+  const checkoutPage = document.getElementById('checkout-page');
+  if (!checkoutPage) return;
+
+  const productSelect = document.getElementById('checkout-product-select');
+  const checkoutForm = document.getElementById('checkout-form');
+  const params = new URLSearchParams(window.location.search);
+  const availableProducts = catalogProducts.map(getCatalogProduct);
+  const selectedId = params.get('id');
+
+  productSelect.innerHTML = availableProducts
+    .map((product) => `<option value="${product.id}" ${String(product.id) === String(selectedId) ? 'selected' : ''}>${escapeHtml(product.name)} ${product.isSold ? '(vendida)' : ''}</option>`)
+    .join('');
+
+  const getSelectedProduct = () => getCatalogProduct(getProductById(productSelect.value) || availableProducts[0]);
+
+  if (!selectedId) {
+    const firstAvailable = availableProducts.find((product) => !product.isSold);
+    if (firstAvailable) productSelect.value = firstAvailable.id;
+  }
+
+  renderCheckoutProduct(getSelectedProduct());
+
+  productSelect.addEventListener('change', () => {
+    const product = getSelectedProduct();
+    window.history.replaceState({}, '', `/compra.html?id=${product.id}`);
+    renderCheckoutProduct(product);
+  });
+
+  checkoutForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const product = getSelectedProduct();
+    if (product.isSold) return;
+
+    const formData = new FormData(checkoutForm);
+    const subject = encodeURIComponent(`Pedido Noir Supply - ${product.name}`);
+    const body = encodeURIComponent(getCheckoutMessage(product, formData));
+    const status = document.getElementById('checkout-status');
+
+    status.hidden = false;
+    status.textContent = 'Pedido generado. Se abrira tu correo para enviarlo a Noir Supply.';
+    window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+  });
 };
 
 const enableImageHover = () => {};
@@ -856,6 +951,7 @@ document.addEventListener('DOMContentLoaded', () => {
   filterRenderedCatalogCards();
   updateCatalogUrl();
   renderProductDetail();
+  setupCheckout();
   enableImageHover();
   setupStaggeredMotion();
   setupScrollAnimations();
