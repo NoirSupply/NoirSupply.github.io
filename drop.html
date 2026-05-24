@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Drop colaboracion de Noir Supply x Desmon.pe con piezas Y2K second hand, preventa activa y stock 1/1.">
+  <title>Drop Colaboracion - Noir Supply</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles_updated.css?v=mobile-store-2026">
+  <link rel="icon" href="/img/icon.png" type="image/x-icon">
+  <meta property="og:image" content="https://noirarchive.netlify.app/img/icon.png">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <a href="/index.html" aria-label="Logo Noir Supply">
+        <img src="img/icon.png?v=noir-tribal-matte" alt="Logo de Noir Supply" class="logo">
+      </a>
+      <div class="title-container">
+        <a href="/index.html">
+          <span class="brand-name">Noir Supply</span>
+          <p>Archivo Y2K / Second Hand</p>
+        </a>
+      </div>
+      <button id="hamburger" aria-label="Abrir menu" aria-expanded="false" class="hamburger">&#9776;</button>
+    </div>
+    <nav id="nav-menu" aria-label="Menu principal">
+      <ul>
+        <li><a href="/index.html">Inicio</a></li>
+        <li><a href="/drop.html">Drop</a></li>
+        <li><a href="/galeria.html">Catalogo</a></li>
+        <li><a href="/nosotros.html">Historia</a></li>
+        <li><a href="/feedback.html">Clientes</a></li>
+        <li><a href="https://instagram.com/noirsupply0" target="_blank" rel="noopener noreferrer">IG</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="drop-page fade-in">
+      <div class="drop-page-copy">
+        <p class="hero-kicker">Ultimo drop</p>
+        <h1>Drop<br>colaboracion</h1>
+        <p class="drop-collab">
+          <a href="https://instagram.com/desmon.pe" target="_blank" rel="noopener noreferrer">@desmon.pe</a>
+          x
+          <a href="https://instagram.com/noirsupply0" target="_blank" rel="noopener noreferrer">@noirsupply0</a>
+        </p>
+        <p>Megadrop Y2K junto a Desmon: denim baggy, hoodies graficas, jorts y piezas 1/1 listas para preventa.</p>
+        <div class="drop-stats" aria-label="Detalles del drop">
+          <span>Preventa activa</span>
+          <span>+80 piezas</span>
+          <span>1/1 only</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#drop-catalogo" class="btn-ver-mas">Ver prendas</a>
+          <a href="https://instagram.com/p/DXvAyvjEV_1/" class="btn-secondary" target="_blank" rel="noopener noreferrer">Ver post</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="drop-catalogo" class="section fade-in">
+      <p class="section-kicker">Catalogo del drop</p>
+      <h2>Seleccion colaboracion</h2>
+      <p class="catalog-intro">Todas las prendas de esta seleccion pertenecen al ultimo drop. Puedes separar disponibles, vendidas y categorias sin salir de la pagina.</p>
+      <div class="catalog-tools" data-catalog-filters>
+        <div class="catalog-search">
+          <label for="drop-catalog-search">Buscar</label>
+          <input id="drop-catalog-search" type="search" placeholder="Buscar denim, hoodie, jorts..." data-filter-search>
+        </div>
+        <div class="catalog-filter-group" aria-label="Estado de prendas">
+          <a class="is-active" data-filter-status="all" href="/drop.html?v=catalog-live-v8#drop-catalogo">Todo stock</a>
+          <a data-filter-status="available" href="/drop.html?v=catalog-live-v8&status=available#drop-catalogo">Disponibles</a>
+          <a data-filter-status="sold" href="/drop.html?v=catalog-live-v8&status=sold#drop-catalogo">Vendidas</a>
+        </div>
+        <select aria-label="Filtrar por categoria" data-filter-category>
+          <option value="all">Todas las categorias</option>
+          <option value="jorts">Jorts</option>
+          <option value="denim">Denim</option>
+          <option value="hoodies">Hoodies</option>
+          <option value="jackets">Jackets</option>
+        </select>
+      </div>
+      <p class="catalog-empty" data-catalog-empty hidden>No hay prendas con esos filtros por ahora.</p>
+      <div class="catalogo-previa drop-catalog-grid" data-products-container data-catalog-mode="drop" data-catalog-controls="true"></div>
+      <a href="/galeria.html" class="btn-ver-mas">Abrir catalogo</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Noir Supply. Archivo Y2K second hand. |
+      <a href="https://instagram.com/noirsupply0" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </p>
+  </footer>
+  <script src="script.js?v=catalog-live-v8"></script>
+</body>
+</html>
